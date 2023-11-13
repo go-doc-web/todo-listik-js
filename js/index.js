@@ -7,6 +7,9 @@ import { getTaskTemplate } from './getTaskTemplate.js';
 // Function addTask add newTask
 import { addTask } from './addTask.js';
 
+import { closeModal, openModal } from './modal.js';
+import { getTaskTemplateFull } from './getTaskTemplateFull.js';
+
 let items = data;
 
 // Функция Рендер
@@ -21,7 +24,16 @@ const toggleComplited = id => {
   console.log(items);
 };
 const viewTask = id => {
-  console.log('viewTask', id);
+  const viewTask = items.find(item => item.id === id);
+
+  console.log(getTaskTemplateFull(viewTask));
+  openModal();
+  closeModal();
+  const contentModal = document.querySelector('.content-modal');
+  contentModal.innerHTML = '';
+  contentModal.insertAdjacentHTML('beforeend', getTaskTemplateFull(viewTask));
+
+  render();
 };
 const deleteTask = id => {
   items = items.filter(item => item.id !== id);
@@ -67,5 +79,4 @@ const handleList = e => {
 
 refs.form.addEventListener('submit', handleSubmit);
 refs.list.addEventListener('click', handleList);
-
 render();
