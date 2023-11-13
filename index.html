@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>todo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <h1 class="header-title">TODO LISTIK</h1>
+      </div>
+    </div>
+    <section class="body-todos">
+      <div class="container">
+        <h2 class="list-title">List of tasks for today</h2>
+        <ul class="list"></ul>
+      </div>
+    </section>
+    <section class="add-todo">
+      <div class="container">
+        <h2 class="add-title">Add a new task</h2>
+        <form class="form">
+          <div class="group">
+            <label for="title">Title note</label>
+            <input type="text" name="title" id="title" placeholder="type task..." />
+          </div>
+          <div class="group">
+            <label for="note">Note</label>
+            <textarea name="text" id="note" cols="30" rows="10"></textarea>
+          </div>
+          <div class="flex-row group">
+            <input type="checkbox" name="important" id="important" />
+            <label for="important">important</label>
+          </div>
+
+          <button class="btn-submit" type="submit">add</button>
+        </form>
+      </div>
+    </section>
+    <footer>
+      <b>by GODOC </b>
+    </footer>
+
+    <script src="./js/main.js" type="module"></script>
+  </body>
+</html>
