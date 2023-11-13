@@ -1,4 +1,4 @@
-export const addTask = (id, title, text, isImpotant) => {
+export const addTask = (title, text, isImpotant) => {
   const newTask = {
     id: Date.now(),
     title,
@@ -7,5 +7,5 @@ export const addTask = (id, title, text, isImpotant) => {
     isImpotant,
   };
 
-  items.push(newTask);
+  return newTask;
 };

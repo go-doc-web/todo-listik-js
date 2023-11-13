@@ -25,20 +25,15 @@ render();
 
 const handleSubmit = e => {
   e.preventDefault();
-  console.log(e.currentTarget);
-  console.log(e.target);
 
   const title = e.target.elements.title.value;
   const text = e.target.elements.text.value;
   const isImpotant = e.target.elements.important.checked;
 
-  console.log(isImpotant);
-  addTask();
-
-  console.log(newTask);
-
+  items.push(addTask(title, text, isImpotant));
   render();
   refs.form.reset();
+  console.log(items);
 };
 
 refs.form.addEventListener('submit', handleSubmit);
