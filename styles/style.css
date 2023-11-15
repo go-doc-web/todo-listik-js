@@ -8,6 +8,8 @@ body {
   height: 100vh;
   font-family: 'Roboto', sans-serif;
   margin: 0;
+  line-height: 1.5;
+  letter-spacing: normal;
 }
 
 p,
@@ -41,26 +43,56 @@ button {
 }
 
 .container {
-  max-width: 930px;
+  max-width: 830px;
   padding-left: 15px;
   padding-right: 15px;
   margin: 0 auto;
   /* outline: 1px solid tomato; */
 }
 
+.list-ex {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
 /* Header */
 .header {
   padding: 20px 0;
-  /* outline: 1px solid black; */
+  outline: 1px solid black;
 }
+
+.container-header {
+  display: flex;
+  align-items: center;
+}
+
+.logo-svg {
+  fill: inherit;
+  margin-right: 40px;
+  width: 32px;
+}
+
+.logo-svg:hover {
+  fill: orange;
+}
+
+.search-todo {
+  padding: 4px 6px;
+  margin-left: auto;
+}
+
+/* TODO GROUPE */
 
 .body-todos {
   padding: 20px 0;
   /* outline: 1px solid black; */
 }
 
-.list-title {
+.list-title,
+.add-title {
   margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 900;
 }
 
 .add-todo {
@@ -69,6 +101,7 @@ button {
 .wrap {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
 .list-item {
@@ -77,6 +110,37 @@ button {
   justify-content: space-between;
   border: 1px solid black;
   padding: 6px 4px;
+}
+
+.group-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn {
+  display: block;
+  background-color: #fff;
+  border: 1px solid grey;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn:hover .bi-trash {
+  fill: red;
+}
+/* .btn:hover .icon-star {
+  fill: yellow;
+} */
+.btn:hover .icon-view {
+  fill: blue;
+}
+
+.icon-task {
+  width: 18px;
 }
 
 .list-item + .list-item {
