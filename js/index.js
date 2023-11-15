@@ -23,10 +23,13 @@ const toggleComplited = id => {
   render();
   console.log(items);
 };
+const toggleImpotant = id => {
+  items = items.map(item => (item.id === id ? { ...item, isImpotant: !item.isImpotant } : item));
+  render();
+};
 const viewTask = id => {
   const viewTask = items.find(item => item.id === id);
 
-  console.log(getTaskTemplateFull(viewTask));
   openModal();
   closeModal();
   const contentModal = document.querySelector('.content-modal');
@@ -49,6 +52,7 @@ const handleSubmit = e => {
   const isImpotant = e.target.elements.important.checked;
 
   items.push(addTask(title, text, isImpotant));
+
   render();
   refs.form.reset();
 };
@@ -57,9 +61,10 @@ const handleList = e => {
   if (e.target === e.currentTarget) return;
 
   const parent = e.target.closest('li');
+  const buttonParrent = e.target.closest('button');
   const { id } = parent.dataset;
 
-  const { action } = e.target.dataset;
+  const { action } = buttonParrent.dataset;
 
   switch (action) {
     case 'completed':
@@ -70,6 +75,9 @@ const handleList = e => {
       break;
     case 'delete':
       deleteTask(id);
+      break;
+    case 'impotant':
+      toggleImpotant(id);
       break;
 
     default:
