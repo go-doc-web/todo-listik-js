@@ -10,15 +10,6 @@ import { addTask } from './addTask.js';
 import { closeModal, openModal } from './modal.js';
 import { getTaskTemplateFull } from './getTaskTemplateFull.js';
 
-const modal = basicLightbox.create(`
-    <div class="modal">
-     <h2>${title}</h2>
-          <div class="modal-text">
-           ${text}
-          </div>
-    </div>
-`);
-
 let items = data;
 
 // Функция Рендер
@@ -37,7 +28,6 @@ const toggleImpotant = id => {
 };
 const viewTask = id => {
   const viewTask = items.find(item => item.id === id);
-  modal.show();
 
   openModal();
   closeModal();
