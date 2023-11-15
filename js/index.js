@@ -10,6 +10,15 @@ import { addTask } from './addTask.js';
 import { closeModal, openModal } from './modal.js';
 import { getTaskTemplateFull } from './getTaskTemplateFull.js';
 
+const modal = basicLightbox.create(`
+    <div class="modal">
+     <h2>${title}</h2>
+          <div class="modal-text">
+           ${text}
+          </div>
+    </div>
+`);
+
 let items = data;
 
 // Функция Рендер
@@ -21,7 +30,6 @@ const render = () => {
 const toggleComplited = id => {
   items = items.map(item => (item.id === id ? { ...item, isDone: !item.isDone } : item));
   render();
-  console.log(items);
 };
 const toggleImpotant = id => {
   items = items.map(item => (item.id === id ? { ...item, isImpotant: !item.isImpotant } : item));
@@ -29,6 +37,7 @@ const toggleImpotant = id => {
 };
 const viewTask = id => {
   const viewTask = items.find(item => item.id === id);
+  modal.show();
 
   openModal();
   closeModal();
@@ -57,14 +66,16 @@ const handleSubmit = e => {
   refs.form.reset();
 };
 
-const handleList = e => {
+const handleListClick = e => {
   if (e.target === e.currentTarget) return;
 
-  const parent = e.target.closest('li');
-  const buttonParrent = e.target.closest('button');
-  const { id } = parent.dataset;
+  const parentTask = e.target.closest('li');
+  const dataAction = e.target.closest('[data-action]');
+  const { id } = parentTask.dataset;
 
-  const { action } = buttonParrent.dataset;
+  const { action } = dataAction.dataset;
+
+  console.log(action);
 
   switch (action) {
     case 'completed':
@@ -86,5 +97,7 @@ const handleList = e => {
 };
 
 refs.form.addEventListener('submit', handleSubmit);
-refs.list.addEventListener('click', handleList);
+refs.list.addEventListener('click', handleListClick);
 render();
+
+//Modal
