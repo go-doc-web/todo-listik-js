@@ -1,30 +1,55 @@
+import { nanoid } from '../node_modules/nanoid/nanoid.js';
+
 // Refs
 import { refs } from './refs.js';
 // Модель данных
-import { data } from './todo-db.js';
+// import { data } from './todo-db.js';
 // Функция получения разметки
 import { getTaskTemplate } from './getTaskTemplate.js';
-// Function addTask add newTask
-import { addTask } from './addTask.js';
 
 import { closeModal, openModal } from './modal.js';
 import { getTaskTemplateFull } from './getTaskTemplateFull.js';
 
-let items = data;
+import lockal from './lockalstorage.js';
+
+const saveTodo = payload => {
+  lockal.save('todos', payload);
+  // const convertedJson = JSON.stringify(payload);
+  // localStorage.setItem('todos', convertedJson);
+};
+
+const fetchTodos = () => {
+  try {
+    const todos = localStorage.getItem('todos');
+    const res = JSON.parse(todos);
+
+    return res || [];
+  } catch (error) {
+    console.log('pisdets');
+    return [];
+  }
+};
+
+let items = [];
 
 // Функция Рендер
 const render = () => {
   refs.list.innerHTML = '';
   refs.list.insertAdjacentHTML('beforeend', getTaskTemplate(items));
 };
+const addTask = item => {
+  items.push(item);
+};
 
 const toggleComplited = id => {
   items = items.map(item => (item.id === id ? { ...item, isDone: !item.isDone } : item));
+  saveTodo(items);
   render();
-  console.log(items);
 };
 const toggleImpotant = id => {
   items = items.map(item => (item.id === id ? { ...item, isImpotant: !item.isImpotant } : item));
+  saveTodo(items);
+
   render();
 };
 const viewTask = id => {
@@ -40,31 +65,42 @@ const viewTask = id => {
 };
 const deleteTask = id => {
   items = items.filter(item => item.id !== id);
-
+  saveTodo(items);
   render();
 };
 
 const handleSubmit = e => {
   e.preventDefault();
 
-  const title = e.target.elements.title.value;
-  const text = e.target.elements.text.value;
-  const isImpotant = e.target.elements.important.checked;
+  const { value: title } = e.target.elements.title;
+  const { value: text } = e.target.elements.text;
+  const { checked: isImpotant } = e.target.elements.important;
 
-  items.push(addTask(title, text, isImpotant));
+  const payload = {
+    id: nanoid(),
+    title,
+    text,
+    isDone: false,
+    isImpotant,
+  };
+
+  addTask(payload);
+  saveTodo(items);
 
   render();
   refs.form.reset();
 };
 
-const handleList = e => {
+const handleListClick = e => {
   if (e.target === e.currentTarget) return;
+  if (e.target.nodeName === 'LI') return;
+  if (e.target.classList.contains('item-text')) return;
 
-  const parent = e.target.closest('li');
-  const buttonParrent = e.target.closest('button');
-  const { id } = parent.dataset;
+  const parentTask = e.target.closest('li');
+  const dataAction = e.target.closest('[data-action]');
+  const { id } = parentTask.dataset;
 
-  const { action } = buttonParrent.dataset;
+  const { action } = dataAction.dataset;
 
   switch (action) {
     case 'completed':
@@ -85,6 +121,13 @@ const handleList = e => {
   }
 };
 
+const loadData = () => {
+  items = fetchTodos();
+};
+
 refs.form.addEventListener('submit', handleSubmit);
-refs.list.addEventListener('click', handleList);
+refs.list.addEventListener('click', handleListClick);
+loadData();
 render();
+
+//Modal
