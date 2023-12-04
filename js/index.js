@@ -1,5 +1,3 @@
-import { nanoid } from '../node_modules/nanoid/nanoid.js';
-
 // Refs
 import { refs } from './refs.js';
 // Модель данных
