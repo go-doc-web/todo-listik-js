@@ -58,7 +58,7 @@ const handleSubmit = e => {
   const { checked: isImpotant } = e.target.elements.important;
 
   const payload = {
-    id: nanoid(),
+    id: String(Date.now()),
     title,
     text,
     isDone: false,
