@@ -9,26 +9,7 @@ import { getTaskTemplate } from './getTaskTemplate.js';
 
 import { closeModal, openModal } from './modal.js';
 import { getTaskTemplateFull } from './getTaskTemplateFull.js';
-
-import lockal from './lockalstorage.js';
-
-const saveTodo = payload => {
-  lockal.save('todos', payload);
-  // const convertedJson = JSON.stringify(payload);
-  // localStorage.setItem('todos', convertedJson);
-};
-
-const fetchTodos = () => {
-  try {
-    const todos = localStorage.getItem('todos');
-    const res = JSON.parse(todos);
-
-    return res || [];
-  } catch (error) {
-    console.log('pisdets');
-    return [];
-  }
-};
+import { createTodo, fetchTodos, deleteTodo, updateTodo } from './todoApi.js';
 
 let items = [];
 
@@ -43,12 +24,12 @@ const addTask = item => {
 
 const toggleComplited = id => {
   items = items.map(item => (item.id === id ? { ...item, isDone: !item.isDone } : item));
-  saveTodo(items);
+  updateTodo(items);
   render();
 };
 const toggleImpotant = id => {
   items = items.map(item => (item.id === id ? { ...item, isImpotant: !item.isImpotant } : item));
-  saveTodo(items);
+  updateTodo(items);
 
   render();
 };
@@ -65,7 +46,7 @@ const viewTask = id => {
 };
 const deleteTask = id => {
   items = items.filter(item => item.id !== id);
-  saveTodo(items);
+  deleteTodo(items);
   render();
 };
 
@@ -85,7 +66,7 @@ const handleSubmit = e => {
   };
 
   addTask(payload);
-  saveTodo(items);
+  createTodo(items);
 
   render();
   refs.form.reset();
